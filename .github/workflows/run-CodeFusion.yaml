@@ -96,19 +96,19 @@ jobs:
         run: |
           set -euo pipefail
 
-          timestamp="$(date -u +'%Y%m%d-%H%M%S')"
-          branch="output-$timestamp-${GITHUB_RUN_ID}"
-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git switch -c "$branch"
           git add -A output/
 
           if git diff --cached --quiet; then
-            echo "CodeFusion did not produce any changes in output/." >&2
-            exit 1
+            echo "CodeFusion output is unchanged; skipping pull request."
+            exit 0
           fi
 
+          timestamp="$(date -u +'%Y%m%d-%H%M%S')"
+          branch="output-$timestamp-${GITHUB_RUN_ID}"
+
+          git switch -c "$branch"
           git commit -m "Add CodeFusion output ($timestamp UTC)"
           git push --set-upstream origin "$branch"
 

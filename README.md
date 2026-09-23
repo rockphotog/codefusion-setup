@@ -88,6 +88,11 @@ navn som `output-20260923-143012-123456789`. Deretter opprettes et
 endringsforslag mot standardgrenen. Endringsforslaget inneholder en sjekkliste
 for manuell kvalitetssikring.
 
+Dersom de genererte resultatene er identiske med innholdet som allerede ligger
+i `output/`, fullføres arbeidsflyten uten å opprette en ny gren eller et tomt
+endringsforslag. Resultatene er fortsatt tilgjengelige som artefakt fra
+kjøringen.
+
 Før endringsforslaget slås sammen:
 
 1. Sammenlign hver genererte fil under `output/` med den tilhørende kildefilen
