@@ -1,0 +1,75 @@
+name: Run CodeFusion
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "input/**"
+      - ".github/workflows/run-CodeFusion.yaml"
+
+jobs:
+  codefusion:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run CodeFusion
+        run: |
+          set -euo pipefail
+
+          rm -rf output
+          mkdir -p output "$RUNNER_TEMP/codefusion-cache"
+
+          mapfile -d '' input_files < <(
+            find input -type f \( -iname '*.txt' -o -iname '*.xlsx' \) -print0
+          )
+
+          if (( ${#input_files[@]} == 0 )); then
+            echo "No .txt or .xlsx files found in input/" >&2
+            exit 1
+          fi
+
+          for index in "${!input_files[@]}"; do
+            input_path="${input_files[$index]}"
+            relative_path="${input_path#input/}"
+            relative_dir="$(dirname "$relative_path")"
+            input_name="$(basename "$input_path")"
+            work_dir="$RUNNER_TEMP/codefusion-$index"
+            destination="output/$relative_dir"
+
+            mkdir -p "$work_dir" "$destination"
+            cp "$input_path" "$work_dir/$input_name"
+
+            jq -n --arg input_file "/app/CodeFusionFiles/$input_name" '{
+              ui: false,
+              inputFile: $input_file,
+              columnNo: 1,
+              fileContainsHeader: true,
+              version: "2026",
+              source: "MMS",
+              language: "en",
+              exitWhenFinished: true
+            }' > "$work_dir/parameters.json"
+
+            docker run --rm \
+              -v "$work_dir:/app/CodeFusionFiles" \
+              -v "$RUNNER_TEMP/codefusion-cache:/app/CodeFusionFiles/cache" \
+              whoicd/codefusion
+
+            for result in "$work_dir"/*; do
+              if [[ -f "$result" && "$(basename "$result")" != "$input_name" && "$(basename "$result")" != "parameters.json" ]]; then
+                cp "$result" "$destination/"
+              fi
+            done
+          done
+
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: codefusion-results
+          path: output/
+          if-no-files-found: error
