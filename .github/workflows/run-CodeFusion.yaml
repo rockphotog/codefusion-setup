@@ -2,11 +2,6 @@ name: Run CodeFusion
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - "input/**"
-      - "parameters.json"
-      - ".github/workflows/run-CodeFusion.yaml"
 
 jobs:
   codefusion:
