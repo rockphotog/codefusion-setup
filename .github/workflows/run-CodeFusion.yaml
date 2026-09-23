@@ -6,6 +6,8 @@ on:
 jobs:
   codefusion:
     runs-on: ubuntu-latest
+    env:
+      CODEFUSION_IMAGE: whoicd/codefusion:1.1.1
     permissions:
       contents: write
       pull-requests: write
@@ -57,13 +59,20 @@ jobs:
               -v "$input_dir:/input" \
               -v "$config_dir:/app/CodeFusionFiles" \
               -v "$RUNNER_TEMP/codefusion-cache:/app/CodeFusionFiles/cache" \
-              whoicd/codefusion
+              "$CODEFUSION_IMAGE"
 
+            result_count=0
             for result in "$input_dir"/*; do
               if [[ -f "$result" && "$(basename "$result")" != "$input_name" ]]; then
                 cp "$result" "$destination/"
+                ((result_count += 1))
               fi
             done
+
+            if (( result_count == 0 )); then
+              echo "CodeFusion produced no output for $input_path." >&2
+              exit 1
+            fi
           done
 
       - name: Upload results
