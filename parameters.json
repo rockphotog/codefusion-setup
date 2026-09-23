@@ -1,0 +1,30 @@
+﻿{
+  // CHECK the documentation at https://icd.who.int/docs/codefusion/en/
+
+  //The lines that start with // are comments and will be ignored by the program
+
+  "inputFile": "./test.txt", //could be and excel (.xlsx) or a tab separated text file (.txt)
+  "columnNo": 1, // the column number in the input file that contains the text to be matched
+  "fileContainsHeader": false, //true if the input file contains a header row. If true, the first row will be ignored during the processing
+
+  "version": "2026", //other examples: "2023" "2022" "2023-01". "beta" (for the unreleased daily version)
+  "source": "MMS", // could be "MMS" or "ICF", "ICHI" or "foundation"
+
+  // Samples for additional paramaters
+
+  //"subtreeFilter": "http://id.who.int/icd/entity/1435254666", //use when you want to search only in a subtree(s) of the classification. 
+  //   By default the  whole classification is used for the  foundation.
+  //   MMS, ICHI and ICF have their defaults for subtreeFilter if it is not provided which searches the classifcation without the extension codes. MMS excludes TM and V chapters as well
+
+  //"includeScoreInOutput": false, //score is a value between 0 and 1 that indicates the similarity between the input text and the matched term
+  //"matchThreshold": 0.5, //the minimum score to be included in the output. The default is 0.43
+  "mappingMode": false, //default false
+  // "idColumnNo": 1, //required when mappingMode=true
+  //"termTypeColumnNo": 5, //used if mappingMode is true. It is the column number in the input file that contains the term type (e.g. "Title", "Synonym", etc.). It's optional. If provided the information included in the generated mapping file
+  //"useFreePostcoordinationMatching": true, //default false
+
+  "exitWhenFinished": false, //if true, the program will exit after processing the input file. Will not wait for user input"
+  //"codeFusionFilesFolder": "C:/Users/john/Documents/CodeFusionFiles", //Change and uncomment this if you'd like CodeFusion in UI mode to use different folder than the default one
+  "language": "en"
+
+}

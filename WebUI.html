@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeFusion - Web UI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0;
+            font-size: 2.5em;
+            font-weight: 700;
+            letter-spacing: -1px;
+            text-shadow: 0 2px 10px rgba(102, 126, 234, 0.1);
+            position: relative;
+        }
+
+            h1::after {
+                content: '';
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+                width: 60px;
+                height: 3px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border-radius: 2px;
+            }
+
+        #versionInfo {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 0.75em;
+            font-weight: 600;
+            white-space: nowrap;
+            display: block;
+            margin-left: 180px;
+            margin-top: -10px;
+        }
+
+        .doc {
+            color: #666;
+            position: relative;
+            font-size: 0.9em;
+            top: 30px;
+            right: 10px;
+        }
+
+        .doc-link {
+            display: inline-block;
+            margin-top: 5px;
+            color: #1e3c72;
+            text-decoration: none;
+            font-size: 0.85em;
+            font-weight: 500;
+            transition: color 0.3s;
+            float: right;
+        }
+
+            .doc-link:hover {
+                color: #2a5298;
+                text-decoration: underline;
+            }
+
+            .doc-link::before {
+                /*content: "📚 ";*/
+            }
+
+        #codeFusionForm {
+            margin-top: 1em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+            input[type="text"]:focus,
+            input[type="number"]:focus,
+            select:focus {
+                outline: none;
+                border-color: #1e3c72;
+            }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .conditional {
+            margin-left: 20px;
+            padding-left: 20px;
+            border-left: 3px solid #1e3c72;
+            display: none;
+        }
+
+            .conditional.visible {
+                display: block;
+            }
+
+        button {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+            button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 20px rgba(30, 60, 114, 0.4);
+            }
+
+            button:active {
+                transform: translateY(0);
+            }
+
+            button:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+                transform: none;
+            }
+
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            padding-bottom: 15px;
+            border-radius: 5px;
+            display: none;
+            position: relative;
+            min-height: 60px;
+            background: white;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+
+            .message::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 0%;
+                background: transparent;
+                transition: width 0.3s ease;
+                z-index: 0;
+            }
+
+            .message.processing::before {
+                background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            }
+
+            .message.success {
+                background: white;
+                color: #000000;
+                border: 1px solid #c3e6cb;
+            }
+
+                .message.success::before {
+                    width: 0%;
+                    background: transparent;
+                }
+
+            .message.error {
+                background: #f8d7da;
+                color: #721c24;
+                border: 1px solid #f5c6cb;
+            }
+
+            .message.visible {
+                display: block;
+            }
+
+            .message #messageText {
+                display: block;
+                padding-right: 180px;
+                position: relative;
+                z-index: 1;
+            }
+
+        .hint {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+            .form-row .form-group {
+                margin-bottom: 0;
+            }
+
+        .disconnected-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+            .disconnected-overlay.completed {
+                background: transparent;
+            }
+
+            .disconnected-overlay.visible {
+                display: flex;
+            }
+
+        .disconnected-message {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            max-width: 400px;
+        }
+
+            .disconnected-message h2 {
+                color: #dc3545;
+                margin-bottom: 20px;
+                font-size: 1.5em;
+            }
+
+        .disconnected-overlay.completed .disconnected-message h2 {
+            color: #28a745;
+        }
+
+        .disconnected-message p {
+            color: #666;
+            font-size: 1em;
+            line-height: 1.5;
+        }
+
+        .logs-container {
+            margin-top: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            display: none;
+        }
+
+            .logs-container.visible {
+                display: block;
+            }
+
+        .logs-toggle-btn {
+            background: none;
+            color: #1e3c72;
+            border: none;
+            padding: 0;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: none;
+            font-weight: 500;
+            text-decoration: underline;
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            width: auto;
+            z-index: 1;
+        }
+
+            .logs-toggle-btn.visible {
+                display: inline-block;
+            }
+
+            .logs-toggle-btn:hover {
+                color: #2a5298;
+                transform: none;
+                box-shadow: none;
+            }
+
+            .logs-toggle-btn .toggle-icon {
+                display: inline-block;
+                margin-right: 4px;
+                transition: transform 0.3s;
+                font-size: 0.7em;
+            }
+
+            .logs-toggle-btn.expanded .toggle-icon {
+                transform: rotate(90deg);
+            }
+
+        .progress-container {
+            margin-top: 20px;
+            display: none;
+        }
+
+            .progress-container.visible {
+                display: block;
+            }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.85em;
+        }
+
+        .progress-status {
+            margin-top: 8px;
+            text-align: center;
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .logs-header {
+            background: #f5f5f5;
+            color: #333;
+            padding: 12px 15px;
+            font-weight: 600;
+            font-size: 0.9em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .logs-content {
+            background: #fafafa;
+            color: #333;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-size: 13px;
+            padding: 15px;
+            height: 300px;
+            overflow-y: auto;
+            line-height: 1.6;
+        }
+
+        .log-entry {
+            margin-bottom: 8px;
+            padding: 4px 0;
+            word-wrap: break-word;
+            color: #555;
+        }
+
+            .log-entry:hover {
+                background: #f0f0f0;
+                padding-left: 5px;
+                margin-left: -5px;
+                border-radius: 3px;
+            }
+
+        .clear-logs-btn {
+            background: white;
+            border: 1px solid #d0d0d0;
+            color: #666;
+            padding: 6px 15px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: auto;
+        }
+
+            .clear-logs-btn:hover {
+                background: #f5f5f5;
+                border-color: #999;
+                color: #333;
+                transform: none;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            }
+
+        .file-item {
+            padding: 4px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.2s;
+        }
+
+            .file-item:hover {
+                background: #f8f8f8;
+            }
+
+            .file-item.selected {
+                background: #e8f0fe;
+                border-left: 3px solid #1e3c72;
+            }
+
+            .file-item.folder {
+                font-weight: normal;
+                color: #333;
+            }
+
+            .file-item.back-button {
+                background: #f5f5f5;
+                font-weight: 600;
+                color: #666;
+            }
+
+                .file-item.back-button:hover {
+                    background: #ececec;
+                }
+
+        .file-icon {
+            font-size: 1em;
+            width: 24px;
+            text-align: center;
+        }
+
+        .excel-style {
+            background: linear-gradient(90deg, transparent 20%, #72d660 25%, #2e8431 75%, transparent 80%);
+            color: white;
+            font-size: 8px;
+            padding: 4px 0 4px 0;
+        }
+
+        .file-info {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .file-name {
+            flex: 1;
+            font-size: 0.8em;
+        }
+
+        .file-size {
+            color: #999;
+            font-size: 0.70em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p class="doc">
+            <a href="https://icd.who.int/docs/codefusion/en/" target="_blank" class="doc-link">CodeFusion Documentation</a>
+        </p>
+        <div class="header-row">
+            <h1>Code<span style="font-weight: 900;">Fusion</span></h1>
+
+        </div>
+        <div id="versionInfo"></div>
+
+
+        <form id="codeFusionForm">
+            <div class="form-group">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px;">
+                    <label for="inputFile" style="margin-bottom: 0;">Input File Selection</label>
+                    <div id="currentPathDisplay" class="hint" style="margin-bottom: 0; color: #1e3c72; font-weight: 500;"></div>
+                </div>
+                <div id="fileBrowser" style="border: 2px solid #e0e0e0; border-radius: 5px; max-height: 200px; overflow-y: auto; background: white;">
+                    <div id="fileList" style="list-style: none; margin: 0; padding: 0;"></div>
+                </div>
+                <input type="hidden" id="inputFile" required>
+                <div id="selectedFileDisplay" class="hint" style="margin-top: 8px; color: #333; font-weight: 500;"></div>
+                <!--<div id="folderPath" class="hint" style="margin-top: 10px; color: #1e3c72; font-weight: 500;"></div>-->
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="fileContainsHeader" checked>
+                        <label for="fileContainsHeader">File contains header row</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="colNoLabel">Column Number for Text</label>
+                    <input type="number" id="colNoLabel" value="1" min="1" required>
+                    <div class="hint">Column number containing the text to be matched (default: 1)</div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="version">Classification Version</label>
+                    <select id="version" required>
+                        <!-- Populated dynamically with JavaScript -->
+                    </select>
+                    <div class="hint">Select a version year or use beta for daily updated version</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="source">Source</label>
+                    <select id="source" required>
+                        <option value="MMS" selected>MMS</option>
+                        <option value="foundation">Foundation</option>
+                        <option value="ICF">ICF</option>
+                        <option value="ICHI">ICHI</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="language">Language</label>
+                    <select id="language" required>
+                        <option value="en" selected>English (en)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="useFreePostcoordinationMatching">
+                    <label for="useFreePostcoordinationMatching">Use free postcoordination matching</label>
+                </div>
+                <span class="hint">Enable all postcoordination combinations (not only those suggested in the classification for some of the axes)</span>
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="mappingMode">
+                    <label for="mappingMode">Mapping mode</label>
+                </div>
+            </div>
+
+            <div id="mappingOptions" class="conditional">
+                <div class="form-group">
+                    <label for="idColumn">ID Column Number</label>
+                    <input type="number" id="idColumn" value="1" min="1">
+                    <div class="hint">Column number containing the identifiers for the external terminology/classification</div>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="provideLinearizationInfo">
+                        <label for="provideLinearizationInfo">Provide linearization information in mapping output</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="termTypeColumnNo">Term Type Column Number (Optional)</label>
+                    <input type="number" id="termTypeColumnNo" min="1">
+                    <div class="hint">Column number containing the Term Type (e.g. "Title", "Synonym", etc.)</div>
+                </div>
+            </div>
+
+            <button type="submit" id="submitBtn">Process</button>
+        </form>
+
+        <div id="message" class="message">
+            <span id="messageText"></span>
+            <button id="logsToggleBtn" class="logs-toggle-btn" onclick="toggleLogs()">
+                <span id="toggleBtnText">Show Processing Details</span>
+            </button>
+        </div>
+
+        <!-- Progress bar -->
+        <div id="progressContainer" class="progress-container">
+            <div class="progress-label">
+
+                <span id="progressText">0 / 0</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div id="progressBarFill" class="progress-bar-fill" style="width: 0%">
+                    <span id="progressPercentage">0%</span>
+                </div>
+            </div>
+            <div id="progressStatus" class="progress-status">Idle</div>
+        </div>
+
+        <!-- Console logs container -->
+        <div id="logsContainer" class="logs-container">
+
+            <div id="logsContent" class="logs-content"></div>
+        </div>
+    </div>
+
+    <!-- Disconnected overlay -->
+    <div id="disconnectedOverlay" class="disconnected-overlay">
+        <div class="disconnected-message">
+            <h2 id="disconnectedTitle">⚠️ Connection Lost</h2>
+            <p id="disconnectedText">CodeFusion process has been disconnected.</p>
+            <p style="margin-top: 15px; font-weight: 600;">Please close this browser window/tab.</p>
+        </div>
+    </div>
+
+    <script>
+        // Health check polling to detect if backend is still running
+        let healthCheckFailCount = 0;
+        const maxHealthCheckFails = 3;
+        const healthCheckInterval = 3000; // 3 seconds
+        const serverInstanceId = window.SERVER_INSTANCE_ID; // Injected by server
+        let processingCompleted = false; // Track if processing completed successfully
+
+        async function checkHealth() {
+            try {
+                const response = await fetch(`/api/health?instanceId=${encodeURIComponent(serverInstanceId)}`, {
+                    method: 'GET',
+                    cache: 'no-cache'
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.status === 'ok') {
+                        // Reset fail count on successful check
+                        healthCheckFailCount = 0;
+                    } else {
+                        // Unexpected status
+                        healthCheckFailCount++;
+                        if (healthCheckFailCount >= maxHealthCheckFails) {
+                            showDisconnected();
+                        }
+                    }
+                } else {
+                    // HTTP error or instance mismatch
+                    healthCheckFailCount++;
+                    if (healthCheckFailCount >= maxHealthCheckFails) {
+                        showDisconnected();
+                    }
+                }
+            } catch (error) {
+                healthCheckFailCount++;
+                if (healthCheckFailCount >= maxHealthCheckFails) {
+                    showDisconnected();
+                }
+            }
+        }
+
+        function showDisconnected() {
+            const overlay = document.getElementById('disconnectedOverlay');
+            const title = document.getElementById('disconnectedTitle');
+            const text = document.getElementById('disconnectedText');
+
+            // Stop further health checks
+            clearInterval(healthCheckTimer);
+            // Stop log polling
+            if (eventSource) {
+                eventSource.close();
+                eventSource = null;
+            }
+            // Stop progress tracking
+            stopProgressTracking();
+
+            if (processingCompleted) {
+                // Completion shutdown - show success message without grey background
+                overlay.classList.add('visible', 'completed');
+                title.textContent = '✓ Task Completed';
+                text.textContent = 'CodeFusion completed the task and has been disconnected. You may close this browser window/tab';
+
+                // Disable all form elements except logs toggle button
+                document.querySelectorAll('#codeFusionForm input, #codeFusionForm select, #codeFusionForm button').forEach(el => {
+                    el.disabled = true;
+                });
+
+                // Keep logs toggle button enabled
+                document.getElementById('logsToggleBtn').disabled = false;
+            } else {
+                // Unexpected disconnection - show error message with grey background
+                overlay.classList.add('visible');
+                title.textContent = '⚠️ Connection Lost';
+                text.textContent = 'CodeFusion process has been disconnected.';
+            }
+        }
+
+        // Start health check polling
+        const healthCheckTimer = setInterval(checkHealth, healthCheckInterval);
+
+        // Load and display version information
+        (async function () {
+            try {
+                const response = await fetch('/api/version');
+                const versionData = await response.json();
+                const versionInfoSpan = document.getElementById('versionInfo');
+                versionInfoSpan.textContent = `v${versionData.version}`;
+            } catch (error) {
+                console.error('Error loading version:', error);
+            }
+        })();
+
+        // Populate version dropdown
+        (function () {
+            const versionSelect = document.getElementById('version');
+            const currentYear = new Date().getFullYear();
+            const startYear = 2018;
+
+            // Add beta option
+            const betaOption = document.createElement('option');
+            betaOption.value = 'beta';
+            betaOption.textContent = 'beta';
+            versionSelect.appendChild(betaOption);
+
+            // Add years from current year down to 2018
+            for (let year = currentYear; year >= startYear; year--) {
+                const option = document.createElement('option');
+                option.value = year.toString();
+                option.textContent = year.toString();
+                if (year === currentYear) {
+                    option.selected = true;
+                }
+                versionSelect.appendChild(option);
+            }
+        })();
+
+        // Load languages based on version and source
+        async function loadLanguagesForVersionAndSource(version, source) {
+            try {
+                const response = await fetch(`/api/languages/${version}/${source}`);
+                const result = await response.json();
+
+                if (result.success) {
+                    const languageSelect = document.getElementById('language');
+                    const currentValue = languageSelect.value;
+
+                    // Check if current selection is available in new languages
+                    const isCurrentAvailable = result.languages.some(lang => lang.languageCode === currentValue);
+                    const selectedLanguage = isCurrentAvailable ? currentValue : 'en';
+
+                    languageSelect.innerHTML = result.languages.sort((a, b) => a.languageName.localeCompare(b.languageName)).map(lang => {
+                        const selected = lang.languageCode === selectedLanguage;
+                        return `<option value="${lang.languageCode}" ${selected ? 'selected' : ''}>${lang.languageName}</option>`;
+                    }).join('');
+                }
+            } catch (error) {
+                console.error('Error loading languages:', error);
+            }
+        }
+
+        // Load available sources based on version
+        async function loadSourcesForVersion(version) {
+            try {
+                const response = await fetch(`/api/sources/${version}`);
+                const result = await response.json();
+
+                if (result.success) {
+                    const sourceSelect = document.getElementById('source');
+                    const currentValue = sourceSelect.value;
+
+                    // Priority order for source selection (foundation has lowest priority)
+                    const sourcePriority = ['MMS', 'ICHI', 'ICF', 'foundation'];
+
+                    // Check if current selection is available in new sources
+                    const isCurrentAvailable = result.sources.includes(currentValue);
+
+                    // Determine which source to select
+                    let selectedSource;
+                    if (isCurrentAvailable) {
+                        selectedSource = currentValue;
+                    } else {
+                        // Select the highest priority available source
+                        selectedSource = sourcePriority.find(s => result.sources.includes(s)) || result.sources[0];
+                    }
+
+                    sourceSelect.innerHTML = result.sources.map(source => {
+                        const selected = source === selectedSource;
+                        return `<option value="${source}" ${selected ? 'selected' : ''}>${source}</option>`;
+                    }).join('');
+
+                    // After sources are loaded, reload languages for the new source
+                    await loadLanguagesForVersionAndSource(version, selectedSource);
+                }
+            } catch (error) {
+                console.error('Error loading sources:', error);
+            }
+        }
+
+        // Track current path and selected file
+        let currentPath = '';
+        let selectedFilePath = '';
+
+        // Truncate file path if longer than 40 characters
+        function truncatePath(path) {
+            if (path.length <= 40) {
+                return path;
+            }
+            // Remove at least 5 characters from the beginning
+            const removeCount = Math.max(5, path.length - 37);
+            return '...' + path.substring(removeCount);
+        }
+
+        // Load available files from CodeFusionFiles folder
+        async function loadAvailableFiles(path = '') {
+            try {
+                const queryParam = path ? `?path=${encodeURIComponent(path)}` : '';
+                const response = await fetch(`/api/files${queryParam}`);
+                const result = await response.json();
+
+                if (result.success) {
+                    currentPath = result.currentPath;
+                    const fileList = document.getElementById('fileList');
+                    //const folderPathDiv = document.getElementById('folderPath');
+                    const currentPathDisplay = document.getElementById('currentPathDisplay');
+                    const selectedFileDisplay = document.getElementById('selectedFileDisplay');
+
+                    // Clear existing items
+                    fileList.innerHTML = '';
+
+                    // Display base folder path
+                    // folderPathDiv.textContent = `📁 Base Folder: ${result.baseFolderPath}`;
+
+                    // Display current path breadcrumb
+                    if (result.currentPath) {
+                        filePath = `${result.baseFolderPath}\\${result.currentPath}`
+                        currentPathDisplay.title = filePath;
+                        currentPathDisplay.textContent = `📂 Current: (${truncatePath(filePath)})`;
+                    } else {
+                        filePath = result.baseFolderPath;
+                        currentPathDisplay.title = filePath;
+                        currentPathDisplay.textContent = `📂 Root Folder (${truncatePath(filePath)})`;
+                    }
+
+                    // Add back button if not in root
+                    if (result.hasParent) {
+                        const backItem = document.createElement('div');
+                        backItem.className = 'file-item back-button';
+                        backItem.innerHTML = `
+                                <span class="file-icon">⬆️</span>
+                                <span class="file-name">.. (Go Up)</span>
+                            `;
+                        backItem.onclick = () => loadAvailableFiles(result.parentPath);
+                        fileList.appendChild(backItem);
+                    }
+
+                    // Add items (folders and files)
+                    if (result.items.length === 0) {
+                        const emptyItem = document.createElement('div');
+                        emptyItem.className = 'file-item';
+                        emptyItem.style.cursor = 'default';
+                        emptyItem.innerHTML = `
+                                <span class="file-icon">📭</span>
+                                <span class="file-name" style="color: #999;">No files or folders found</span>
+                            `;
+                        fileList.appendChild(emptyItem);
+                    } else {
+                        result.items.forEach(item => {
+                            const fileItem = document.createElement('div');
+                            fileItem.className = item.isFolder ? 'file-item folder' : 'file-item';
+
+                            if (item.isFolder) {
+                                // Folder item
+                                fileItem.innerHTML = `
+                                        <span class="file-icon">📁</span>
+                                        <div class="file-info">
+                                            <span class="file-name">${item.name}</span>
+                                        </div>
+                                    `;
+                                fileItem.onclick = () => loadAvailableFiles(item.relativePath);
+                            } else {
+                                // File item
+                                const sizeKB = (item.size / 1024).toFixed(2);
+                                const style = item.name.endsWith('.xlsx') ? 'excel-style' : '';
+                                const icon = item.name.endsWith('.xlsx') ? '☷' : '📄';
+                                //const icon = item.name.endsWith('.xlsx') ? 'X' : '📄';
+                                fileItem.innerHTML = `
+                                        <span class="file-icon ${style}">${icon}</span>
+                                        <div class="file-info">
+                                            <span class="file-name">${item.name}</span>
+                                            <span class="file-size">${sizeKB} KB</span>
+                                        </div>
+                                    `;
+                                fileItem.onclick = () => selectFile(item.fullPath, item.name, fileItem);
+                            }
+
+                            fileList.appendChild(fileItem);
+                        });
+                    }
+
+                    // Update selected file display if a file was previously selected
+                    if (selectedFilePath) {
+                        selectedFileDisplay.textContent = `Selected: ${selectedFilePath.split(/[\\\/]/).pop()}`;
+                    }
+                } else {
+                    console.error('Error loading files:', result.message);
+                    showMessage(`Error loading files: ${result.message}`, 'error');
+                }
+            } catch (error) {
+                console.error('Error loading files:', error);
+                showMessage(`Error loading files: ${error.message}`, 'error');
+            }
+        }
+
+        // Select a file
+        function selectFile(fullPath, fileName, fileElement) {
+            selectedFilePath = fullPath;
+            document.getElementById('inputFile').value = fullPath;
+            document.getElementById('selectedFileDisplay').textContent = `✓ Selected: ${fileName}`;
+
+            // Update UI to show selected state
+            document.querySelectorAll('.file-item').forEach(item => item.classList.remove('selected'));
+            fileElement.classList.add('selected');
+        }
+
+        // Load available files on page load
+        loadAvailableFiles();
+
+        // Initialize with current version and source
+        async function initializeDropdowns() {
+            const initialVersion = document.getElementById('version').value;
+            await loadSourcesForVersion(initialVersion);
+        }
+
+        // Call initialization
+        initializeDropdowns();
+
+        // Update sources and languages when version changes
+        document.getElementById('version').addEventListener('change', function () {
+            loadSourcesForVersion(this.value);
+        });
+
+        // Update languages when source changes
+        document.getElementById('source').addEventListener('change', function () {
+            const version = document.getElementById('version').value;
+            loadLanguagesForVersionAndSource(version, this.value);
+        });
+
+        // Console log streaming
+        let eventSource = null;
+        let autoScroll = true;
+
+        function connectToLogStream() {
+            if (eventSource) {
+                eventSource.close();
+            }
+
+            eventSource = new EventSource('/api/logs');
+
+            eventSource.onmessage = function (event) {
+                const logData = JSON.parse(event.data);
+                addLogEntry(logData.message);
+            };
+
+            eventSource.onerror = function (error) {
+                console.error('Log stream error:', error);
+                // Don't reconnect if the connection is closed normally
+                if (eventSource.readyState === EventSource.CLOSED) {
+                    eventSource.close();
+                }
+            };
+        }
+
+        function addLogEntry(message) {
+            const logsContent = document.getElementById('logsContent');
+            const logsContainer = document.getElementById('logsContainer');
+
+            // Do NOT automatically show logs - let user toggle manually
+            // Just add the log entry
+
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.textContent = message;
+            logsContent.appendChild(logEntry);
+
+            // Auto-scroll to bottom if enabled and visible
+            if (autoScroll && logsContainer.classList.contains('visible')) {
+                logsContent.scrollTop = logsContent.scrollHeight;
+            }
+        }
+
+        function clearLogs() {
+            const logsContent = document.getElementById('logsContent');
+            logsContent.innerHTML = '';
+        }
+
+        // Detect manual scrolling to disable auto-scroll
+        document.getElementById('logsContent').addEventListener('scroll', function () {
+            const element = this;
+            // Check if user scrolled away from bottom
+            autoScroll = element.scrollHeight - element.scrollTop === element.clientHeight;
+        });
+
+        // Start log streaming on page load
+        connectToLogStream();
+
+        // Progress tracking
+        let progressCheckTimer = null;
+        const progressCheckInterval = 500; // 500ms for smooth updates
+
+        async function checkProgress() {
+            try {
+                const response = await fetch('/api/progress', { cache: 'no-cache' });
+                if (response.ok) {
+                    const progressData = await response.json();
+                    updateProgressUI(progressData);
+                }
+            } catch (error) {
+                console.error('Error checking progress:', error);
+            }
+        }
+
+        function updateProgressUI(progressData) {
+            const messageDiv = document.getElementById('message');
+            const messageText = document.getElementById('messageText');
+
+            if (progressData.status === 'processing') {
+                // Show message div with processing state
+                if (!messageDiv.classList.contains('visible')) {
+                    messageDiv.classList.add('visible');
+                }
+                messageDiv.classList.add('processing');
+                messageDiv.classList.remove('success', 'error');
+
+                // Update progress background width
+                const percentage = Math.round(progressData.percentage);
+                messageDiv.style.setProperty('--progress-width', `${percentage}%`);
+
+                // Update via CSS variable and direct style
+                const beforeStyle = document.createElement('style');
+                beforeStyle.id = 'progress-style';
+                const existingStyle = document.getElementById('progress-style');
+                if (existingStyle) {
+                    existingStyle.remove();
+                }
+                beforeStyle.textContent = `
+                        #message.processing::before {
+                            width: ${percentage}%;
+                        }
+                    `;
+                document.head.appendChild(beforeStyle);
+
+                // Update message text
+                messageText.textContent = `Processing... ${progressData.current} / ${progressData.total} (${percentage}%)`;
+            } else if (progressData.status === 'completed') {
+                // Set flag that processing completed successfully
+                processingCompleted = true;
+
+                // Update the dynamic style to maintain full progress bar for success state
+                const progressStyle = document.getElementById('progress-style');
+                if (progressStyle) {
+                    progressStyle.textContent = `
+                            #message.success::before {
+                                width: 100%;
+                                background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+                            }
+                        `;
+                }
+
+                // Update the status message with output file information
+                let completionMessage = 'Processing completed successfully!';
+                showMessage(completionMessage, 'success');
+
+                // Stop polling after a delay to show completion
+                setTimeout(() => {
+                    if (progressCheckTimer) {
+                        clearInterval(progressCheckTimer);
+                        progressCheckTimer = null;
+                    }
+                }, 3000); // Keep showing for 3 seconds
+            }
+        }
+
+        function showProgressBar() {
+            const messageDiv = document.getElementById('message');
+            const messageText = document.getElementById('messageText');
+            const toggleBtn = document.getElementById('logsToggleBtn');
+
+            // Show and initialize message div with progress
+            messageDiv.classList.add('visible', 'processing');
+            messageText.textContent = 'Initializing...';
+
+            // Initialize progress at 0%
+            const beforeStyle = document.createElement('style');
+            beforeStyle.id = 'progress-style';
+            beforeStyle.textContent = `
+                    #message.processing::before {
+                        width: 0%;
+                    }
+                `;
+            document.head.appendChild(beforeStyle);
+
+            // Show the toggle button when processing starts
+            toggleBtn.classList.add('visible');
+        }
+
+        function toggleLogs() {
+            const logsContainer = document.getElementById('logsContainer');
+            const toggleBtn = document.getElementById('logsToggleBtn');
+            const toggleBtnText = document.getElementById('toggleBtnText');
+
+            if (logsContainer.classList.contains('visible')) {
+                // Hide logs
+                logsContainer.classList.remove('visible');
+                toggleBtn.classList.remove('expanded');
+                toggleBtnText.textContent = 'Show Processing Details';
+            } else {
+                // Show logs
+                logsContainer.classList.add('visible');
+                toggleBtn.classList.add('expanded');
+                toggleBtnText.textContent = 'Hide Processing Details';
+
+                // Auto-scroll to bottom when opening
+                const logsContent = document.getElementById('logsContent');
+                logsContent.scrollTop = logsContent.scrollHeight;
+            }
+        }
+
+        function hideProgressBar() {
+            const messageDiv = document.getElementById('message');
+            messageDiv.classList.remove('visible', 'processing');
+
+            // Clean up progress style
+            const progressStyle = document.getElementById('progress-style');
+            if (progressStyle) {
+                progressStyle.remove();
+            }
+        }
+
+        function startProgressTracking() {
+            if (!progressCheckTimer) {
+                progressCheckTimer = setInterval(checkProgress, progressCheckInterval);
+            }
+        }
+
+        function stopProgressTracking() {
+            if (progressCheckTimer) {
+                clearInterval(progressCheckTimer);
+                progressCheckTimer = null;
+            }
+        }
+
+        // Clean up EventSource on page unload
+        window.addEventListener('beforeunload', function () {
+            if (eventSource) {
+                eventSource.close();
+            }
+        });
+
+        // Toggle mapping options
+        document.getElementById('mappingMode').addEventListener('change', function () {
+            const mappingOptions = document.getElementById('mappingOptions');
+            if (this.checked) {
+                mappingOptions.classList.add('visible');
+            } else {
+                mappingOptions.classList.remove('visible');
+            }
+        });
+
+        // No file upload needed - users provide file path directly
+
+        // Handle form submission
+        document.getElementById('codeFusionForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            const messageDiv = document.getElementById('message');
+            const inputFilePath = document.getElementById('inputFile').value;
+
+            if (!inputFilePath) {
+                showMessage('Please select a file from the file browser', 'error');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing...';
+            messageDiv.classList.remove('visible');
+
+            // Show progress bar immediately
+            showProgressBar();
+
+            // Start progress tracking
+            startProgressTracking();
+
+            const data = {
+                inputFile: inputFilePath,
+                fileContainsHeader: document.getElementById('fileContainsHeader').checked,
+                colNoLabel: parseInt(document.getElementById('colNoLabel').value) || 1,
+                version: document.getElementById('version').value,
+                source: document.getElementById('source').value,
+                language: document.getElementById('language').value,
+                useFreePostcoordinationMatching: document.getElementById('useFreePostcoordinationMatching').checked,
+                mappingMode: document.getElementById('mappingMode').checked,
+                idColumn: parseInt(document.getElementById('idColumn').value) || 1,
+                provideLinearizationInformationInMappingOutput: document.getElementById('provideLinearizationInfo').checked,
+                termTypeColumnNo: document.getElementById('termTypeColumnNo').value ?
+                    parseInt(document.getElementById('termTypeColumnNo').value) : null
+            };
+
+            try {
+                const response = await fetch('/api/process', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showMessage(result.message, 'success');
+                } else {
+                    showMessage('Error: ' + result.message, 'error');
+                    // Stop progress tracking on error
+                    stopProgressTracking();
+                    hideProgressBar();
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+                // Stop progress tracking on error
+                stopProgressTracking();
+                hideProgressBar();
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Process';
+            }
+        });
+
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            const messageText = document.getElementById('messageText');
+            messageText.textContent = text;
+            messageDiv.className = 'message ' + type + ' visible';
+        }
+    </script>
+</body>
+</html>
