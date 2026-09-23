@@ -1,2 +1,3 @@
 ﻿3A50 Thalassaemias	FlexiMatch	Real	Thalassaemias	http://id.who.int/icd/release/11/mms/330259189/unspecified	3A50.Z	http://id.who.int/icd/entity/330259189	
 2A00.00 Glioblastoma of brain	FlexiMatch	Real	Glioblastoma of brain	http://id.who.int/icd/release/11/mms/650534447	2A00.00	http://id.who.int/icd/entity/650534447	
+EA80.2	NoMatch						
