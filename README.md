@@ -1,6 +1,6 @@
 # Arbeidsflyt for CodeFusion
 
-Dette kodelageret kjører WHOs kommandolinjeverktøy CodeFusion i Docker.
+Dette repo'et kjører WHOs kommandolinjeverktøy CodeFusion i Docker.
 Verktøyet sammenholder medisinske koder og oversatt medisinsk terminologi med
 ICD og andre WHOFIC-klassifikasjoner.
 
@@ -12,21 +12,21 @@ endringsforslag (pull request) for manuell kvalitetssikring.
 
 - `input/` inneholder kildefilene i formatet `.txt` eller `.xlsx`.
 - `output/` inneholder de genererte CodeFusion-resultatene etter at
-	endringsforslaget med resultatene er slått sammen.
+  endringsforslaget med resultatene er slått sammen.
 - `parameters.json` inneholder de felles innstillingene for CodeFusion på
-	kommandolinjen.
+  kommandolinjen.
 - `.github/workflows/run-CodeFusion.yaml` kjører CodeFusion og oppretter
-	endringsforslaget med resultatene.
+  endringsforslaget med resultatene.
 
 Kodelageret inneholder ikke en lokal kjørbar CodeFusion-fil. Arbeidsflyten
-bruker det versjonerte Docker-avbildet `whoicd/codefusion:1.1.1`.
+bruker den versjonerte Docker-avbildningen `whoicd/codefusion:1.1.1`.
 
 ## Klargjøre inndata
 
 1. Legg til én eller flere `.txt`- eller `.xlsx`-filer under `input/`.
-2. Registrer og send filene til kodelagerets standardgren.
+2. Registrer filene i Git, og send endringene til kodelagerets standardgren.
 3. Oppdater `parameters.json` dersom det er behov for andre innstillinger for
-	 samsvarssøk.
+   samsvarssøk.
 
 Underkataloger i `input/` støttes. Arbeidsflyten bevarer den samme
 katalogstrukturen under `output/`.
@@ -73,7 +73,7 @@ en oversikt over alle tilgjengelige parametere og krav til inndata.
 4. Vent til jobben `codefusion` er fullført.
 
 Arbeidsflyten behandler alle støttede filer i `input/`. Resultatene lastes også
-opp som arbeidsflytartefaktet `codefusion-results`.
+opp som artefaktet `codefusion-results` fra arbeidsflyten.
 
 ## Kontrollere resultatene
 
@@ -85,11 +85,11 @@ for manuell kvalitetssikring.
 Før endringsforslaget slås sammen:
 
 1. Sammenlign hver genererte fil under `output/` med den tilhørende kildefilen
-	under `input/`.
+   under `input/`.
 2. Kontroller resultater som ikke er merket `GoodMatch`.
 3. Bekreft at de valgte kodene og den oversatte terminologien er korrekte.
 4. Slå sammen endringsforslaget først når den manuelle kvalitetssikringen er
-	fullført.
+   fullført.
 
 Hver kjøring erstatter innholdet i arbeidskatalogen `output/` med nye resultater.
 Når endringsforslaget slås sammen, blir resultatene fra denne kjøringen dermed
