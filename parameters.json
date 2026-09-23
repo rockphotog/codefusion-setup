@@ -3,6 +3,7 @@
 
   //The lines that start with // are comments and will be ignored by the program
 
+  "ui": false,
   "inputFile": "", //could be and excel (.xlsx) or a tab separated text file (.txt)
   "columnNo": 1, // the column number in the input file that contains the text to be matched
   "fileContainsHeader": false, //true if the input file contains a header row. If true, the first row will be ignored during the processing
