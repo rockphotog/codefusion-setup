@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - "input/**"
+      - "parameters.json"
       - ".github/workflows/run-CodeFusion.yaml"
 
 jobs:
@@ -38,29 +39,30 @@ jobs:
             relative_dir="$(dirname "$relative_path")"
             input_name="$(basename "$input_path")"
             work_dir="$RUNNER_TEMP/codefusion-$index"
+            input_dir="$work_dir/input"
+            config_dir="$work_dir/config"
             destination="output/$relative_dir"
 
-            mkdir -p "$work_dir" "$destination"
-            cp "$input_path" "$work_dir/$input_name"
+            mkdir -p "$input_dir" "$config_dir" "$destination"
+            cp "$input_path" "$input_dir/$input_name"
 
-            jq -n --arg input_file "/app/CodeFusionFiles/$input_name" '{
-              ui: false,
-              inputFile: $input_file,
-              columnNo: 1,
-              fileContainsHeader: true,
-              version: "2026",
-              source: "MMS",
-              language: "en",
-              exitWhenFinished: true
-            }' > "$work_dir/parameters.json"
+            INPUT_FILE="/input/$input_name" perl -pe '
+              if (/^(\s*"inputFile"\s*:\s*)"(?:\\.|[^"])*"/) {
+                $value = $ENV{"INPUT_FILE"};
+                $value =~ s/\\/\\\\/g;
+                $value =~ s/"/\\"/g;
+                s/^(\s*"inputFile"\s*:\s*)"(?:\\.|[^"])*"/$1"$value"/;
+              }
+            ' parameters.json > "$config_dir/parameters.json"
 
             docker run --rm \
-              -v "$work_dir:/app/CodeFusionFiles" \
+              -v "$input_dir:/input" \
+              -v "$config_dir:/app/CodeFusionFiles" \
               -v "$RUNNER_TEMP/codefusion-cache:/app/CodeFusionFiles/cache" \
               whoicd/codefusion
 
-            for result in "$work_dir"/*; do
-              if [[ -f "$result" && "$(basename "$result")" != "$input_name" && "$(basename "$result")" != "parameters.json" ]]; then
+            for result in "$input_dir"/*; do
+              if [[ -f "$result" && "$(basename "$result")" != "$input_name" ]]; then
                 cp "$result" "$destination/"
               fi
             done
