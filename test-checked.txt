@@ -1,4 +1,0 @@
-﻿PatientID,DiagnosisCode,DiagnosisDescription,DiagnosisSystem,ProcedureCode,ProcedureDescription,ProcedureSystem,DateOfService	MatchLevel	MatchType	bestMatchPhrase	LinearizationURI	code	FoundationURI
-P001,ICD10_A001,Chickenpox,ICD-10,CPT_90210,Physical Exam,CPT,2023-10-15	NoMatch						
-P002,ICD10_B11,Influenza,ICD-10,CPT_90210,Physical Exam,CPT,2023-11-01	NoMatch						
-P003,ICD10_F03,Schizophrenia,ICD-10,CPT_90220,Counseling,CPT,2023-10-20	NoMatch						
