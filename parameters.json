@@ -26,6 +26,6 @@
 
   "exitWhenFinished": true, //if true, the program will exit after processing the input file. Will not wait for user input"
   //"codeFusionFilesFolder": "C:/Users/john/Documents/CodeFusionFiles", //Change and uncomment this if you'd like CodeFusion in UI mode to use different folder than the default one
-  "language": "no"
+  "language": "en"
 
 }
