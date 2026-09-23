@@ -5,7 +5,7 @@
 
   "inputFile": "", //could be and excel (.xlsx) or a tab separated text file (.txt)
   "columnNo": 1, // the column number in the input file that contains the text to be matched
-  "fileContainsHeader": true, //true if the input file contains a header row. If true, the first row will be ignored during the processing
+  "fileContainsHeader": false, //true if the input file contains a header row. If true, the first row will be ignored during the processing
 
   "version": "2026", //other examples: "2023" "2022" "2023-01". "beta" (for the unreleased daily version)
   "source": "MMS", // could be "MMS" or "ICF", "ICHI" or "foundation"
