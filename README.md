@@ -75,6 +75,12 @@ en oversikt over alle tilgjengelige parametere og krav til inndata.
 Arbeidsflyten behandler alle støttede filer i `input/`. Resultatene lastes også
 opp som artefaktet `codefusion-results` fra arbeidsflyten.
 
+Klassifikasjonsdata som CodeFusion laster ned, mellomlagres mellom kjøringene.
+Mellomlageret er knyttet til CodeFusion-versjonen, operativsystemet,
+maskinarkitekturen og innholdet i `parameters.json`. En endring i konfigurasjonen
+oppretter derfor et nytt mellomlager. GitHub sletter mellomlagre som ikke har
+vært brukt på mer enn sju dager.
+
 ## Kontrollere resultatene
 
 Etter en vellykket kjøring oppretter og publiserer arbeidsflyten en gren med et
