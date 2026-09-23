@@ -1,0 +1,1 @@
+﻿EA82 Nummular dermatitis	FlexiMatch	Real	Nummular dermatitis	http://id.who.int/icd/release/11/mms/816000251	EA82	http://id.who.int/icd/entity/816000251	
