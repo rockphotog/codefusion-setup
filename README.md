@@ -1,101 +1,109 @@
-# CodeFusion workflow
+# Arbeidsflyt for CodeFusion
 
-This repository runs the WHO CodeFusion command-line tool in Docker. It matches
-medical codes and translated medical terminology against ICD and other WHOFIC
-classifications.
+Dette kodelageret kjører WHOs kommandolinjeverktøy CodeFusion i Docker.
+Verktøyet sammenholder medisinske koder og oversatt medisinsk terminologi med
+ICD og andre WHOFIC-klassifikasjoner.
 
-The workflow is manually triggered. It reads files from `input/`, applies the
-settings in `parameters.json`, writes generated files to `output/`, and opens a
-pull request for manual quality assurance.
+Arbeidsflyten startes manuelt. Den leser filer fra `input/`, bruker innstillingene
+i `parameters.json`, skriver genererte filer til `output/` og oppretter et
+endringsforslag (pull request) for manuell kvalitetssikring.
 
-## Repository layout
+## Struktur i kodelageret
 
-- `input/` contains the source `.txt` and `.xlsx` files.
-- `output/` contains generated CodeFusion results after an output pull request
-	is merged.
-- `parameters.json` contains the shared CodeFusion command-line settings.
-- `.github/workflows/run-CodeFusion.yaml` runs CodeFusion and creates the output
-	pull request.
+- `input/` inneholder kildefilene i formatet `.txt` eller `.xlsx`.
+- `output/` inneholder de genererte CodeFusion-resultatene etter at
+	endringsforslaget med resultatene er slått sammen.
+- `parameters.json` inneholder de felles innstillingene for CodeFusion på
+	kommandolinjen.
+- `.github/workflows/run-CodeFusion.yaml` kjører CodeFusion og oppretter
+	endringsforslaget med resultatene.
 
-The repository does not include a native CodeFusion executable. The workflow
-uses the versioned `whoicd/codefusion:1.1.1` Docker image.
+Kodelageret inneholder ikke en lokal kjørbar CodeFusion-fil. Arbeidsflyten
+bruker det versjonerte Docker-avbildet `whoicd/codefusion:1.1.1`.
 
-## Prepare input
+## Klargjøre inndata
 
-1. Add one or more `.txt` or `.xlsx` files under `input/`.
-2. Commit and push the input files to the repository's default branch.
-3. Update `parameters.json` when different matching settings are required.
+1. Legg til én eller flere `.txt`- eller `.xlsx`-filer under `input/`.
+2. Registrer og send filene til kodelagerets standardgren.
+3. Oppdater `parameters.json` dersom det er behov for andre innstillinger for
+	 samsvarssøk.
 
-Subdirectories under `input/` are supported. The workflow preserves that
-structure under `output/`.
+Underkataloger i `input/` støttes. Arbeidsflyten bevarer den samme
+katalogstrukturen under `output/`.
 
-CodeFusion expects tab-separated data in `.txt` files. Set `columnNo` and
-`fileContainsHeader` in `parameters.json` to match the input structure.
+CodeFusion forventer tabulatordelte data i `.txt`-filer. Angi `columnNo` og
+`fileContainsHeader` i `parameters.json` i samsvar med strukturen i inndataene.
 
-An `.xlsx` input produces an Excel output. A `.txt` input produces both a
-tab-separated text output and an Excel output. CodeFusion adds `-checked` to
-standard output names. Mapping mode also produces `-mapping` files.
+En `.xlsx`-fil gir én Excel-fil som resultat. En `.txt`-fil gir både en
+tabulatordelt tekstfil og en Excel-fil som resultat. CodeFusion føyer `-checked`
+til standardnavnene på resultatfilene. Koblingsmodus genererer i tillegg filer
+med `-mapping` i filnavnet.
 
-## Configure CodeFusion
+## Konfigurere CodeFusion
 
-Edit `parameters.json` to control the classification version, source, language,
-matching mode, threshold, and other CodeFusion options.
+Rediger `parameters.json` for å styre klassifikasjonsversjon, kilde, språk,
+koblingsmodus, terskelverdi og øvrige innstillinger i CodeFusion.
 
-When `mappingMode` is enabled, set `idColumn` to the input column containing the
-external terminology identifier. `termTypeColumnNo` is optional. WHO recommends
-using a linearization such as `MMS` for mappings so postcoordination rules can be
-applied; `foundation` output does not include postcoordination.
+Når `mappingMode` er aktivert, skal `idColumn` angi kolonnen som inneholder
+identifikatoren fra den eksterne terminologien. `termTypeColumnNo` er valgfri.
+WHO anbefaler å bruke en linearisering som `MMS` ved kobling, slik at reglene for
+postkoordinering kan anvendes. Resultater fra `foundation` inneholder ikke
+postkoordinering.
 
-The workflow overrides only `inputFile`, setting it to the current file under
-the container's `/input` directory. Keep these settings enabled for automation:
+Arbeidsflyten overstyrer bare `inputFile` og angir denne som den aktuelle filen
+i katalogen `/input` i beholderen. Behold følgende innstillinger for automatisert
+kjøring:
 
 ```jsonc
 "ui": false,
 "exitWhenFinished": true
 ```
 
-`ui: false` selects the command-line tool. `exitWhenFinished: true` allows the
-container and GitHub Actions job to finish without interactive input.
+`ui: false` velger kommandolinjeverktøyet. `exitWhenFinished: true` gjør at
+beholderen og GitHub Actions-jobben kan avsluttes uten interaktiv inntasting.
 
-See the [CodeFusion documentation](https://icd.who.int/docs/codefusion/en/) for
-all available parameters and input requirements.
+Se [dokumentasjonen for CodeFusion](https://icd.who.int/docs/codefusion/en/) for
+en oversikt over alle tilgjengelige parametere og krav til inndata.
 
-## Run the workflow
+## Kjøre arbeidsflyten
 
-1. Open the repository's **Actions** tab on GitHub.
-2. Select **Run CodeFusion**.
-3. Select **Run workflow**.
-4. Wait for the `codefusion` job to complete.
+1. Åpne fanen **Actions** for kodelageret på GitHub.
+2. Velg **Run CodeFusion**.
+3. Velg **Run workflow**.
+4. Vent til jobben `codefusion` er fullført.
 
-The workflow processes every supported file in `input/`. It also uploads the
-results as the `codefusion-results` workflow artifact.
+Arbeidsflyten behandler alle støttede filer i `input/`. Resultatene lastes også
+opp som arbeidsflytartefaktet `codefusion-results`.
 
-## Review the output
+## Kontrollere resultatene
 
-After a successful run, the workflow creates and pushes a branch named like
-`output-20260923-143012-123456789` and opens a pull request against the default
-branch. The pull request contains a manual QA checklist.
+Etter en vellykket kjøring oppretter og publiserer arbeidsflyten en gren med et
+navn som `output-20260923-143012-123456789`. Deretter opprettes et
+endringsforslag mot standardgrenen. Endringsforslaget inneholder en sjekkliste
+for manuell kvalitetssikring.
 
-Before merging:
+Før endringsforslaget slås sammen:
 
-1. Compare each generated file under `output/` with its source under `input/`.
-2. Review results not marked `GoodMatch`.
-3. Confirm the selected codes and translated terminology are correct.
-4. Merge the pull request only after completing manual QA.
+1. Sammenlign hver genererte fil under `output/` med den tilhørende kildefilen
+	under `input/`.
+2. Kontroller resultater som ikke er merket `GoodMatch`.
+3. Bekreft at de valgte kodene og den oversatte terminologien er korrekte.
+4. Slå sammen endringsforslaget først når den manuelle kvalitetssikringen er
+	fullført.
 
-Each run replaces the working `output/` directory with newly generated results.
-Merging the pull request therefore makes that run's output the current reviewed
-result set.
+Hver kjøring erstatter innholdet i arbeidskatalogen `output/` med nye resultater.
+Når endringsforslaget slås sammen, blir resultatene fra denne kjøringen dermed
+det gjeldende, kvalitetssikrede resultatsettet.
 
-## Repository settings
+## Innstillinger for kodelageret
 
-The workflow requires permission to push its generated branch and open a pull
-request. In GitHub, open **Settings > Actions > General**, select **Read and
-write permissions**, and enable **Allow GitHub Actions to create and approve
+Arbeidsflyten må ha tillatelse til å publisere den genererte grenen og opprette
+et endringsforslag. Åpne **Settings > Actions > General** på GitHub, velg **Read
+and write permissions**, og aktiver **Allow GitHub Actions to create and approve
 pull requests**.
 
-## Data scope
+## Avgrensning av data
 
-Use this repository only for medical codes and translations. Do not add personal
-health information or other identifying patient data to input files, output
-files, workflow logs, or artifacts.
+Kodelageret skal bare brukes til medisinske koder og oversettelser. Ikke legg
+personopplysninger om helse eller andre pasientidentifiserende opplysninger i
+inndatafiler, resultatfiler, logger fra arbeidsflyten eller artefakter.
