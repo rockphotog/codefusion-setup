@@ -19,7 +19,7 @@
 
   //"includeScoreInOutput": false, //score is a value between 0 and 1 that indicates the similarity between the input text and the matched term
   //"matchThreshold": 0.5, //the minimum score to be included in the output. The default is 0.43
-  "mappingMode": true, //default false
+  "mappingMode": false, //default false
   //"idColumn": 1, //required when mappingMode=true
   //"termTypeColumnNo": 5, //used if mappingMode is true. It is the column number in the input file that contains the term type (e.g. "Title", "Synonym", etc.). It's optional. If provided the information included in the generated mapping file
   //"useFreePostcoordinationMatching": true, //default false
