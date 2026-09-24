@@ -15,3 +15,10 @@ Crazy, light
 38341003	Hypertensjon
 64859006	Osteoporose
 161891005	Ryggsmerter
+backache
+spinal pain
+backpain, low 
+Osteoporosis
+Osteoprosis
+Osteoporosis, heavy
+Osteoporosis, light
