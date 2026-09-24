@@ -9,3 +9,9 @@ Lack of coordination, unspecified
 degenerative disorder of macula
 Age-related macular degeneration
 macular degeneration
+Crazy, light
+233607000	Pneumokokkpneumoni
+370219009	Moderat astma
+38341003	Hypertensjon
+64859006	Osteoporose
+161891005	Ryggsmerter
