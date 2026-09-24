@@ -6,3 +6,12 @@ No bladder control	FlexiMatch	Real	Problems of bladder control	http://id.who.int
 Very large hand	NoMatch						
 Unspecified lack of coordination	GoodMatch	Real	Lack of coordination	http://id.who.int/icd/release/11/mms/961178280/unspecified	MB45.Z	http://id.who.int/icd/entity/961178280	
 Lack of coordination, unspecified	GoodMatch	Real	Lack of coordination	http://id.who.int/icd/release/11/mms/961178280/unspecified	MB45.Z	http://id.who.int/icd/entity/961178280	
+degenerative disorder of macula	GoodMatch	Real	degenerative disorder of macula	http://id.who.int/icd/release/11/mms/697366740/unspecified	9B78.3Z	http://id.who.int/icd/entity/697366740	
+Age-related macular degeneration	GoodMatch	Real	Age-related macular degeneration	http://id.who.int/icd/release/11/mms/1514301548/unspecified	9B75.0Z	http://id.who.int/icd/entity/1514301548	
+macular degeneration	GoodMatch	Real	macular degeneration NOS	http://id.who.int/icd/release/11/mms/697366740/unspecified	9B78.3Z	http://id.who.int/icd/entity/697366740	
+Crazy, light	NoMatch						
+233607000	NoMatch						
+370219009	NoMatch						
+38341003	NoMatch						
+64859006	NoMatch						
+161891005	NoMatch						
