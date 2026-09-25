@@ -1,4 +1,5 @@
-﻿EA82 Nummular dermatitis	FlexiMatch	Real	Nummular dermatitis	http://id.who.int/icd/release/11/mms/816000251	EA82	http://id.who.int/icd/entity/816000251	
+﻿263731006 | Coughing (observable entity) |	FlexiMatch	Real	observation of cough	http://id.who.int/icd/release/11/mms/2027526159	MD12	http://id.who.int/icd/entity/2027526159	
+EA82 Nummular dermatitis	FlexiMatch	Real	Nummular dermatitis	http://id.who.int/icd/release/11/mms/816000251	EA82	http://id.who.int/icd/entity/816000251	
 Malignant neoplasms of other or ill-defined sites in the lip, oral cavity or pharynx, unspecified	GoodMatch	Real	Malignant neoplasms of other or ill-defined sites in the lip, oral cavity or pharynx	http://id.who.int/icd/release/11/mms/1118531333/unspecified	2B6E.Z	http://id.who.int/icd/entity/1118531333	
 Lacks house	GoodMatch	Real	lack of housing	http://id.who.int/icd/release/11/mms/1325772378	QD71.0	http://id.who.int/icd/entity/1325772378	
 Lack of housing	GoodMatch	Real	lack of housing	http://id.who.int/icd/release/11/mms/1325772378	QD71.0	http://id.who.int/icd/entity/1325772378	
@@ -6,3 +7,19 @@ No bladder control	FlexiMatch	Real	Problems of bladder control	http://id.who.int
 Very large hand	NoMatch						
 Unspecified lack of coordination	GoodMatch	Real	Lack of coordination	http://id.who.int/icd/release/11/mms/961178280/unspecified	MB45.Z	http://id.who.int/icd/entity/961178280	
 Lack of coordination, unspecified	GoodMatch	Real	Lack of coordination	http://id.who.int/icd/release/11/mms/961178280/unspecified	MB45.Z	http://id.who.int/icd/entity/961178280	
+degenerative disorder of macula	GoodMatch	Real	degenerative disorder of macula	http://id.who.int/icd/release/11/mms/697366740/unspecified	9B78.3Z	http://id.who.int/icd/entity/697366740	
+Age-related macular degeneration	GoodMatch	Real	Age-related macular degeneration	http://id.who.int/icd/release/11/mms/1514301548/unspecified	9B75.0Z	http://id.who.int/icd/entity/1514301548	
+macular degeneration	GoodMatch	Real	macular degeneration NOS	http://id.who.int/icd/release/11/mms/697366740/unspecified	9B78.3Z	http://id.who.int/icd/entity/697366740	
+Crazy, light	NoMatch						
+233607000	NoMatch						
+370219009	NoMatch						
+38341003	NoMatch						
+64859006	NoMatch						
+161891005	NoMatch						
+backache	GoodMatch	UnderShoreLine	backache NOS	http://id.who.int/icd/release/11/mms/2051065876/unspecified	ME84.Z	http://id.who.int/icd/entity/1800187363	
+spinal pain	GoodMatch	Real	Spinal pain	http://id.who.int/icd/release/11/mms/2051065876/unspecified	ME84.Z	http://id.who.int/icd/entity/2051065876	
+backpain, low 	GoodMatch	Real	Low back pain	http://id.who.int/icd/release/11/mms/1815305992/unspecified	ME84.2Z	http://id.who.int/icd/entity/1815305992	
+Osteoporosis	GoodMatch	Real	Osteoporosis	http://id.who.int/icd/release/11/mms/2113001430/unspecified	FB83.1Z	http://id.who.int/icd/entity/2113001430	
+Osteoprosis	NoMatch						
+Osteoporosis, heavy	FlexiMatch	Real	Osteoporosis	http://id.who.int/icd/release/11/mms/2113001430/unspecified	FB83.1Z	http://id.who.int/icd/entity/2113001430	
+Osteoporosis, light	FlexiMatch	Real	Osteoporosis	http://id.who.int/icd/release/11/mms/2113001430/unspecified	FB83.1Z	http://id.who.int/icd/entity/2113001430	
