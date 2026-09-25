@@ -1,4 +1,4 @@
-name: Run CodeFusion
+name: Run CodeFusion QA 1
 
 on:
   workflow_dispatch:
