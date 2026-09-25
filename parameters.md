@@ -44,14 +44,16 @@ forward slashes in this value, including on Windows, for example
 
 ## GitHub Actions: Used and Ignored Settings
 
-The two workflows, `run-CodeFusion.yaml` and `run-CodeFusion-QA.yaml`, behave
-the same way:
+The standard workflows, `run-CodeFusion.yaml` and `run-CodeFusion-QA.yaml`, use
+the standard configuration. The separate `run-CodeFusion-Experimental.yaml`
+workflow uses the experimental configuration. All workflows otherwise process
+files in the same way:
 
-1. They read only `parameters.json`. `parameters-experimental.json` is not
-  referenced by either workflow and has no effect on GitHub Actions runs.
-2. For each file under `input/`, the workflow copies `parameters.json` to the
-  temporary Docker configuration directory and replaces its `inputFile` with
-  the container path `/input/<filename>`.
+1. The standard workflows read `parameters.json`; the experimental workflow
+  reads `parameters-experimental.json`.
+2. For each file under `input/`, the selected file is copied to the temporary
+  Docker configuration directory as `parameters.json` and its `inputFile` is
+  replaced with the container path `/input/<filename>`.
 3. The resulting configuration is passed to CodeFusion in the Docker image.
 4. The input and configuration directories are mounted at `/input` and
   `/app/CodeFusionFiles`; result files are copied from `/input` into
@@ -79,9 +81,10 @@ The action-specific behavior of each setting is:
 | `language` | Used by CodeFusion. |
 
 The workflow itself does not use `codeFusionFilesFolder` to choose files or
-outputs. Changing that value does not change the Actions mounts. Similarly,
-changing `parameters-experimental.json` does not change a run until the
-workflow is explicitly changed to read that file.
+outputs. Changing that value does not change the Actions mounts. The
+experimental workflow has its own classification cache key based on
+`parameters-experimental.json`, so its cache is separate from the standard
+workflows.
 
 ## Parameters
 
