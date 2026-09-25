@@ -1,8 +1,0 @@
-﻿EA82 Nummular dermatitis	FlexiMatch	Real	Nummular dermatitis	http://id.who.int/icd/release/11/mms/816000251	EA82	http://id.who.int/icd/entity/816000251	
-Malignant neoplasms of other or ill-defined sites in the lip, oral cavity or pharynx, unspecified	GoodMatch	Real	Malignant neoplasms of other or ill-defined sites in the lip, oral cavity or pharynx	http://id.who.int/icd/release/11/mms/1118531333/unspecified	2B6E.Z	http://id.who.int/icd/entity/1118531333	
-Lacks house	GoodMatch	Real	lack of housing	http://id.who.int/icd/release/11/mms/1325772378	QD71.0	http://id.who.int/icd/entity/1325772378	
-Lack of housing	GoodMatch	Real	lack of housing	http://id.who.int/icd/release/11/mms/1325772378	QD71.0	http://id.who.int/icd/entity/1325772378	
-No bladder control	FlexiMatch	Real	Problems of bladder control	http://id.who.int/icd/release/11/mms/1157749237/unspecified	6C00.Z	http://id.who.int/icd/entity/1157749237	
-Very large hand	NoMatch						
-Unspecified lack of coordination	GoodMatch	Real	Lack of coordination	http://id.who.int/icd/release/11/mms/961178280/unspecified	MB45.Z	http://id.who.int/icd/entity/961178280	
-Lack of coordination, unspecified	GoodMatch	Real	Lack of coordination	http://id.who.int/icd/release/11/mms/961178280/unspecified	MB45.Z	http://id.who.int/icd/entity/961178280	

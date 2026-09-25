@@ -1,0 +1,27 @@
+﻿external_id	term_type	term	NoMatch						
+263731006	Title	Coughing (observable entity)	NoMatch						
+EA82	Title	Nummular dermatitis	NoMatch						
+example-003	Title	Malignant neoplasms of other or ill-defined sites in the lip, oral cavity or pharynx, unspecified	NoMatch						
+example-004	Title	Lacks house	NoMatch						
+example-004	Synonym	Lack of housing	NoMatch						
+example-005	Title	No bladder control	NoMatch						
+example-006	Title	Very large hand	NoMatch						
+example-007	Title	Unspecified lack of coordination	NoMatch						
+example-007	Synonym	Lack of coordination, unspecified	NoMatch						
+example-008	Title	degenerative disorder of macula	NoMatch						
+example-008	Synonym	Age-related macular degeneration	NoMatch						
+example-008	Synonym	macular degeneration	NoMatch						
+example-009	Title	Crazy, light	NoMatch						
+233607000	Title	Pneumokokkpneumoni	NoMatch						
+370219009	Title	Moderat astma	NoMatch						
+38341003	Title	Hypertensjon	NoMatch						
+64859006	Title	Osteoporose	NoMatch						
+161891005	Title	Ryggsmerter	NoMatch						
+161891005	Synonym	backache	NoMatch						
+161891005	Synonym	spinal pain	NoMatch						
+161891005	Synonym	backpain, low	NoMatch						
+example-016	Title	Osteoporosis	NoMatch						
+example-016	Synonym	Osteoprosis	NoMatch						
+example-016	Synonym	Osteoporosis, heavy	NoMatch						
+example-016	Synonym	Osteoporosis, light	NoMatch						
+example-017	Title	Neck pain, severe	NoMatch						
