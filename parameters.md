@@ -73,7 +73,7 @@ The action-specific behavior of each setting is:
 | `includeScoreInOutput` | Used by CodeFusion. |
 | `matchThreshold` | Used by CodeFusion. |
 | `mappingMode` | Used by CodeFusion. Mapping-specific settings only have an effect when this is `true`. |
-| `idColumn` | Read only when `mappingMode` is `true`; otherwise inactive. |
+| `idColumnNo` | Read only when `mappingMode` is `true`; otherwise inactive. |
 | `termTypeColumnNo` | Read only for mapping output when `mappingMode` is `true`; otherwise inactive. |
 | `useFreePostcoordinationMatching` | Used by CodeFusion. |
 | `exitWhenFinished` | Used. Keep `true` so the container can finish without keyboard input. |
@@ -176,11 +176,11 @@ belong to the same external concept, which lets synonyms contribute to one
 mapping suggestion.
 
 Use mapping mode when the input contains several labels or synonyms for each
-external concept. Set `idColumn` to the column containing the shared external
+external concept. Set `idColumnNo` to the column containing the shared external
 concept identifier. WHO recommends using a linearization such as `MMS` for
 mapping so its postcoordination rules can be applied.
 
-### `idColumn`
+### `idColumnNo`
 
 Required when `mappingMode` is `true`. This 1-based column number contains the
 identifier of the external terminology or classification. It is **not** the
@@ -191,7 +191,7 @@ one external concept.
 
 Optional 1-based column containing labels such as `Title` or `Synonym`. When
 provided in mapping mode, the term type is included in the mapping output. It
-does not identify which rows belong to the same concept; use `idColumn` for
+does not identify which rows belong to the same concept; use `idColumnNo` for
 that.
 
 ### `useFreePostcoordinationMatching`
@@ -256,7 +256,7 @@ Use this when multiple rows share an external concept ID:
   "source": "MMS",
   "language": "en",
   "mappingMode": true,
-  "idColumn": 1,
+  "idColumnNo": 1,
   "termTypeColumnNo": 2,
   "useFreePostcoordinationMatching": true,
   "includeScoreInOutput": true,
@@ -289,7 +289,7 @@ and fields such as `MappingMatchLevel`, `bestScore`, `LabelBeingMatched`,
 ## Repository Checklist
 
 1. Put `.txt` or `.xlsx` files in `input/`.
-2. Confirm `columnNo`, `fileContainsHeader`, and, for mappings, `idColumn`.
+2. Confirm `columnNo`, `fileContainsHeader`, and, for mappings, `idColumnNo`.
 3. Choose a classification `version`, `source`, and `language`.
 4. Keep `ui: false` and `exitWhenFinished: true` for GitHub Actions.
 5. Run the workflow and inspect every generated result in the pull request.

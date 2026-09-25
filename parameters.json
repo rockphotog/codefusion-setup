@@ -9,7 +9,7 @@
   "includeScoreInOutput": false,
   "matchThreshold": 0.43,
   "mappingMode": false,
-  "idColumn": 1,
+  "idColumnNo": 1,
   "termTypeColumnNo": 5,
   "useFreePostcoordinationMatching": false,
   "exitWhenFinished": true,
