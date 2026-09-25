@@ -1,4 +1,3 @@
-# Parameters Guide
 # CodeFusion Parameters Guide
 
 This guide explains how to configure the `parameters.json` and
@@ -19,9 +18,8 @@ that workflow.
   and so on.
 - Do not put patient-identifying or other sensitive health information in the
   repository, results, logs, or workflow artifacts.
-- The files in this repository use JSON with comments (JSONC). The comments
-  are useful documentation and are accepted by the repository workflow. A
-  strict JSON parser may require the comments to be removed.
+- Both parameter files are strict JSON. Keep comments out of them so they can
+  be parsed by CodeFusion and other JSON tools.
 
 ## How Configuration Is Selected
 
@@ -43,6 +41,47 @@ For the repository workflow:
 When running CodeFusion directly, set `inputFile` to a file path. WHO requires
 forward slashes in this value, including on Windows, for example
 `C:/data/phrases.xlsx`.
+
+## GitHub Actions: Used and Ignored Settings
+
+The two workflows, `run-CodeFusion.yaml` and `run-CodeFusion-QA.yaml`, behave
+the same way:
+
+1. They read only `parameters.json`. `parameters-experimental.json` is not
+  referenced by either workflow and has no effect on GitHub Actions runs.
+2. For each file under `input/`, the workflow copies `parameters.json` to the
+  temporary Docker configuration directory and replaces its `inputFile` with
+  the container path `/input/<filename>`.
+3. The resulting configuration is passed to CodeFusion in the Docker image.
+4. The input and configuration directories are mounted at `/input` and
+  `/app/CodeFusionFiles`; result files are copied from `/input` into
+  `output/`.
+
+The action-specific behavior of each setting is:
+
+| Setting | GitHub Actions behavior |
+| --- | --- |
+| `ui` | Used. Keep `false`; the workflow runs CodeFusion non-interactively. |
+| `inputFile` | Used, but the checked-in value is always replaced for each input file. |
+| `columnNo` | Used by CodeFusion. |
+| `fileContainsHeader` | Used by CodeFusion. |
+| `version` | Used by CodeFusion to select classification data. |
+| `source` | Used by CodeFusion to select the classification or Foundation. |
+| `subtreeFilter` | Passed to CodeFusion. The repository value is empty, so no project-specific subtree is selected. |
+| `includeScoreInOutput` | Used by CodeFusion. |
+| `matchThreshold` | Used by CodeFusion. |
+| `mappingMode` | Used by CodeFusion. Mapping-specific settings only have an effect when this is `true`. |
+| `idColumn` | Read only when `mappingMode` is `true`; otherwise inactive. |
+| `termTypeColumnNo` | Read only for mapping output when `mappingMode` is `true`; otherwise inactive. |
+| `useFreePostcoordinationMatching` | Used by CodeFusion. |
+| `exitWhenFinished` | Used. Keep `true` so the container can finish without keyboard input. |
+| `codeFusionFilesFolder` | Not useful in these runs. It applies to the Web UI file browser, while Actions sets `ui` to `false`; the workflow mount path is fixed independently at `/app/CodeFusionFiles`. |
+| `language` | Used by CodeFusion. |
+
+The workflow itself does not use `codeFusionFilesFolder` to choose files or
+outputs. Changing that value does not change the Actions mounts. Similarly,
+changing `parameters-experimental.json` does not change a run until the
+workflow is explicitly changed to read that file.
 
 ## Parameters
 
@@ -104,7 +143,7 @@ Two-character language code for the classification language, for example
 Optional comma-separated list of Foundation URIs. Restricts matching to the
 specified entities and their descendants. For example:
 
-```jsonc
+```json
 "subtreeFilter": "http://id.who.int/icd/entity/1435254666,http://id.who.int/icd/entity/1630407678"
 ```
 
@@ -173,7 +212,7 @@ Optional folder used by the Web UI file browser. The WHO default is
 Windows. This setting does not select the input for the repository workflow.
 Example:
 
-```jsonc
+```json
 "codeFusionFilesFolder": "/Users/example/CodeFusionFiles"
 ```
 
@@ -183,7 +222,7 @@ Example:
 
 Use this for one phrase per row:
 
-```jsonc
+```json
 {
   "ui": false,
   "inputFile": "input/phrases.txt",
@@ -204,7 +243,7 @@ Use this for one phrase per row:
 
 Use this when multiple rows share an external concept ID:
 
-```jsonc
+```json
 {
   "ui": false,
   "inputFile": "input/external-terms.xlsx",
