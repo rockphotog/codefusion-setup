@@ -1,4 +1,4 @@
-name: Run CodeFusion QA 1
+name: Run CodeFusion Experimental
 
 on:
   workflow_dispatch:
@@ -21,7 +21,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ runner.temp }}/codefusion-cache
-          key: codefusion-classifications-${{ runner.os }}-${{ runner.arch }}-1.1.1-${{ hashFiles('parameters.json') }}
+          key: codefusion-classifications-${{ runner.os }}-${{ runner.arch }}-1.1.1-experimental-${{ hashFiles('parameters-experimental.json') }}
 
       - name: Run CodeFusion
         run: |
@@ -59,7 +59,7 @@ jobs:
                 $value =~ s/"/\\"/g;
                 s/^(\s*"inputFile"\s*:\s*)"(?:\\.|[^"])*"/$1"$value"/;
               }
-            ' parameters.json > "$config_dir/parameters.json"
+            ' parameters-experimental.json > "$config_dir/parameters.json"
 
             docker run --rm \
               -v "$input_dir:/input" \
