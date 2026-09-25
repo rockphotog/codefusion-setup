@@ -8,7 +8,7 @@
   "subtreeFilter": "",
   "includeScoreInOutput": true,
   "matchThreshold": 0.43,
-  "mappingMode": true,
+  "mappingMode": false,
   "idColumn": 1,
   "termTypeColumnNo": 5,
   "useFreePostcoordinationMatching": true,
