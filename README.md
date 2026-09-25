@@ -44,7 +44,7 @@ med `-mapping` i filnavnet.
 Rediger `parameters.json` for å styre klassifikasjonsversjon, kilde, språk,
 koblingsmodus, terskelverdi og øvrige innstillinger i CodeFusion.
 
-Når `mappingMode` er aktivert, skal `idColumn` angi kolonnen som inneholder
+Når `mappingMode` er aktivert, skal `idColumnNo` angi kolonnen som inneholder
 identifikatoren fra den eksterne terminologien. `termTypeColumnNo` er valgfri.
 WHO anbefaler å bruke en linearisering som `MMS` ved kobling, slik at reglene for
 postkoordinering kan anvendes. Resultater fra `foundation` inneholder ikke
