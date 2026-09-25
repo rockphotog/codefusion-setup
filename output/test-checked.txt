@@ -1,4 +1,4 @@
-﻿3A50 Thalassaemias	FlexiMatch	Real	Thalassaemias	http://id.who.int/icd/release/11/mms/330259189/unspecified	3A50.Z	http://id.who.int/icd/entity/330259189	
-2A00.00 Glioblastoma of brain	FlexiMatch	Real	Glioblastoma of brain	http://id.who.int/icd/release/11/mms/650534447	2A00.00	http://id.who.int/icd/entity/650534447	
-EA80.2	NoMatch						
-EA82 Nummular dermatitis	FlexiMatch	Real	Nummular dermatitis	http://id.who.int/icd/release/11/mms/816000251	EA82	http://id.who.int/icd/entity/816000251	
+﻿3A50 Thalassaemias	FlexiMatch	0.6068025459680102	Real	Thalassaemias	http://id.who.int/icd/release/11/mms/330259189/unspecified	3A50.Z	http://id.who.int/icd/entity/330259189	
+2A00.00 Glioblastoma of brain	FlexiMatch	0.7247029485641752	Real	Glioblastoma of brain	http://id.who.int/icd/release/11/mms/650534447	2A00.00	http://id.who.int/icd/entity/650534447	
+EA80.2	NoMatch	0						
+EA82 Nummular dermatitis	FlexiMatch	0.5209291103888701	Real	Nummular dermatitis	http://id.who.int/icd/release/11/mms/816000251	EA82	http://id.who.int/icd/entity/816000251	
