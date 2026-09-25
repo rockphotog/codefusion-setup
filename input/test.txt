@@ -1,4 +1,26 @@
-3A50 Thalassaemias
-2A00.00 Glioblastoma of brain
-EA80.2
+263731006 | Coughing (observable entity) |
 EA82 Nummular dermatitis
+Malignant neoplasms of other or ill-defined sites in the lip, oral cavity or pharynx, unspecified
+Lacks house
+Lack of housing
+No bladder control
+Very large hand
+Unspecified lack of coordination
+Lack of coordination, unspecified
+degenerative disorder of macula
+Age-related macular degeneration
+macular degeneration
+Crazy, light
+233607000	Pneumokokkpneumoni
+370219009	Moderat astma
+38341003	Hypertensjon
+64859006	Osteoporose
+161891005	Ryggsmerter
+backache
+spinal pain
+backpain, low 
+Osteoporosis
+Osteoprosis
+Osteoporosis, heavy
+Osteoporosis, light
+Neck pain, severe
