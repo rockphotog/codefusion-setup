@@ -1,3 +1,5 @@
+[![Run CodeFusion](https://github.com/rockphotog/codefusion-setup/actions/workflows/run-CodeFusion.yaml/badge.svg)](https://github.com/rockphotog/codefusion-setup/actions/workflows/run-CodeFusion.yaml) [![Run CodeFusion Experimental](https://github.com/rockphotog/codefusion-setup/actions/workflows/run-CodeFusion-Experimental.yaml/badge.svg)](https://github.com/rockphotog/codefusion-setup/actions/workflows/run-CodeFusion-Experimental.yaml)
+
 # Arbeidsflyt for CodeFusion
 
 Dette repo'et kjører WHOs kommandolinjeverktøy CodeFusion i Docker.
