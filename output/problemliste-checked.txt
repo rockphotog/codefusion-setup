@@ -1,0 +1,5 @@
+﻿Pneumococcal pneumonia	GoodMatch	Real	pneumococcal pneumonia	http://id.who.int/icd/release/11/mms/1480627948	CA40.07	http://id.who.int/icd/entity/1480627948	
+Moderate asthma	GoodMatch	PostCoordinationCombination	Asthma[Moderate]	http://id.who.int/icd/release/11/mms/1656445230 & http://id.who.int/icd/release/11/mms/1663264387	CA23&XS0T	http://id.who.int/icd/entity/1656445230 & http://id.who.int/icd/entity/1663264387	
+Hypertensive disorder, systemic arterial	GoodMatch	Real	systemic arterial hypertensive disorder	http://id.who.int/icd/release/11/mms/761947693/unspecified	BA00.Z	http://id.who.int/icd/entity/761947693	
+Osteoporosis 	GoodMatch	Real	Osteoporosis	http://id.who.int/icd/release/11/mms/2113001430/unspecified	FB83.1Z	http://id.who.int/icd/entity/2113001430	
+Backache 	GoodMatch	UnderShoreLine	backache NOS	http://id.who.int/icd/release/11/mms/2051065876/unspecified	ME84.Z	http://id.who.int/icd/entity/1800187363	
